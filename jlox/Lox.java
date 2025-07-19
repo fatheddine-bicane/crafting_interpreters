@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Lox {
+	static boolean hadError = false;
 
 	public static void main(String[] args) throws IOException {
 		// if no argument are passed to the interpreter
@@ -53,4 +54,12 @@ public class Lox {
 			System.out.println(token);
 	}
 
+	static void error(int line, String message) {
+		report(ine, "", message);
+	}
+
+	private static void report(int line, String where, String message) {
+		System.out.println("[line " + line + "] Error" + where + ": " + message);
+		hadError = true;
+	}
 }
