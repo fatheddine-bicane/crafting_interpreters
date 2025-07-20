@@ -53,6 +53,16 @@ class Scanner {
 			case '=': addToken(match('=') ? EQUAL_EQUAL : EQUAL); break;
 			case '<': addToken(match('=') ? LESS_EQUAL : LESS); break;
 			case '>': addToken(match('=') ? GREATER_EQUAL : GREATER); break;
+			// check if '/' is followd by '/' that wpuld be a comment
+			case '/':
+				if (match('/')) {
+					// comment goes all the way to '\n'
+					while (peek() != '\n' && !isAtEnd()) {
+						advance();
+					}
+				} else {
+					addToken(SLASH);
+				}
 	}
 
 	// check if the charcter at the current position matches the expected
@@ -62,6 +72,12 @@ class Scanner {
 
 		current++;
 		return (true);
+	}
+
+	// take a peek and return the char at the current position
+	private char peek() {
+		if (isAtEnd()) return ('\0');
+		return (source.charAt(current));
 	}
 	// consume the current character
 	private char advance() {
