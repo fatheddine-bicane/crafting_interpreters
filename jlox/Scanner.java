@@ -84,7 +84,7 @@ class Scanner {
 		return (source.charAt(current++));
 	}
 
-	// adds a token to the list tokens using the the method below
+	// adds a non value token to the list tokens
 	private void addToken(TokenType type) {
 		addToken(type, null);
 	}
