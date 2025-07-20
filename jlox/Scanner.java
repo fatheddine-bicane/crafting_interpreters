@@ -48,6 +48,20 @@ class Scanner {
 			case '+': addToken(PLUS); break;
 			case ';': addToken(SEMICOLON); break;
 			case '*': addToken(STAR); break;
+			// check if '=' appeared after (!,<,> or =) if not its an assignment
+			case '!': addToken(match('=') ? BANG_EQUAL : BANG); break;
+			case '=': addToken(match('=') ? EQUAL_EQUAL : EQUAL); break;
+			case '<': addToken(match('=') ? LESS_EQUAL : LESS); break;
+			case '>': addToken(match('=') ? GREATER_EQUAL : GREATER); break;
+	}
+
+	// check if the charcter at the current position matches the expected
+	private boolean match(char expected) {
+		if (isAtEnd()) return (false);
+		if (source.charAt(current) != expected) return (false);
+
+		current++;
+		return (true);
 	}
 	// consume the current character
 	private char advance() {
