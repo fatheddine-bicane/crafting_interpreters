@@ -74,7 +74,28 @@ class Scanner {
 				break;
 			// string (longer lexeme)
 			case '"': string(); break;
+			// source code contain a charachter unsupported in Lox
+			default:
+				if (isDigit(c)) {
+					number();
+				} else {
+					Lox.error(line, "Unexpected character.");
+				}
+				break;
+		}
 	}
+
+	private void number() {
+		// consume digits
+		while (isDigit(peek())) advance();
+		// consume '.' if it exist and followd by a digit
+		if (peek() == '.' && isDigit(peekNext())) advance();
+		// consume the digits after '.'
+		while (isDigit(peek())) advance();
+		// add the token
+		addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
+	}
+
 	private void string() {
 		// consume characters aslong as the quote didnt close
 		while (peek() != '"' && !isAtEnd()) {
@@ -106,6 +127,18 @@ class Scanner {
 		if (isAtEnd()) return ('\0');
 		return (source.charAt(current));
 	}
+
+	// same as peek() (the function above) but peeks at character in position curent + 1
+	private char peekNext() {
+		if (current + 1 >= source.length()) return ('\0');
+		return (source.charAt(current + 1));
+	}
+
+	// check a character if its a digit
+	private boolean isDigit(char c) {
+		return (c >= '0' && c <= '9');
+	}
+
 	// consume the current character
 	private char advance() {
 		return (source.charAt(current++));
