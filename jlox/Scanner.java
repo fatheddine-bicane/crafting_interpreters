@@ -10,12 +10,33 @@ import static jlox.TokenType.*;
 class Scanner {
 	private final String source;
 	private final List<Token> tokens = new ArrayList<>();
+	private static final Map <String, TokenType> keywords;
 
 	// INFO: these fields are to hel the loop keep track
 	// of where the scanner is in the source code
 	private int start = 0;
 	private int current = 0;
 	private int line = 1;
+
+	static {
+		keywords = new HashMap<>();
+		keywords.put("and",    AND);
+		keywords.put("class",  CLASS);
+		keywords.put("else",   ELSE);
+		keywords.put("false",  FALSE);
+		keywords.put("for",    FOR);
+		keywords.put("fun",    FUN);
+		keywords.put("if",     IF);
+		keywords.put("nil",    NIL);
+		keywords.put("or",     OR);
+		keywords.put("print",  PRINT);
+		keywords.put("return", RETURN);
+		keywords.put("super",  SUPER);
+		keywords.put("this",   THIS);
+		keywords.put("true",   TRUE);
+		keywords.put("var",    VAR);
+		keywords.put("while",  WHILE);
+	}
 
 	// constractor
 	Scanner(String source) {
@@ -78,11 +99,29 @@ class Scanner {
 			default:
 				if (isDigit(c)) {
 					number();
+				} else if (isAlpha(c)) {
+					identifier();
 				} else {
 					Lox.error(line, "Unexpected character.");
 				}
 				break;
 		}
+	}
+
+	private void identifier() {
+		// consume the identifier
+		while (isAlphaNumeric(peek())) advance();
+
+		// NOTE: we cant tokenize keywords like we did for '=' because:
+		// the user might name a variable 'orichid' and if did tokenize
+		// like befaure we will match the first two characters 'or' and
+		// leave 'ichid'. To fix that we use a concept called "maximal munch"
+		// will consume the entier word and check if its a keyword
+		// wee will use a hashmap for that (look at the keywords object above)
+		String text = source.substring(start, current);
+		TokenType type = keywords.get(text);
+		if (type == null) type = IDENTIFIER;
+		addToken(type);
 	}
 
 	private void number() {
@@ -132,6 +171,16 @@ class Scanner {
 	private char peekNext() {
 		if (current + 1 >= source.length()) return ('\0');
 		return (source.charAt(current + 1));
+	}
+
+	private boolean isAlpha(char c) {
+		return ((c >= 'a' && c <= 'z') ||
+				(c >= 'A' && c <= 'Z') ||
+				(c == '-'));
+	}
+
+	private boolean isAlphaNumeric(char c) {
+		return (isDigit(c) || isAlpha(c));
 	}
 
 	// check a character if its a digit
