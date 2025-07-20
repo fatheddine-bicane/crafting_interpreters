@@ -72,6 +72,24 @@ class Scanner {
 			case '\n':
 				line++;
 				break;
+			// string (longer lexeme)
+			case '"': string(); break;
+	}
+	private void string() {
+		// consume characters aslong as the quote didnt close
+		while (peek() != '"' && !isAtEnd()) {
+			if (peek() == '\n') line++;
+			advance();
+		}
+		// end reached and quote not closed
+		if (isAtEnd()) {
+			Lox.error(line, "Unterminated string");
+		}
+		// peeked '"' (quote closed)
+		advance();
+		// trim sourounding quotes
+		String value = source.substring(start + 1, current - 1);
+		addToken(STRING, value);
 	}
 
 	// check if the charcter at the current position matches the expected
@@ -96,5 +114,16 @@ class Scanner {
 	// adds a non value token to the list tokens
 	private void addToken(TokenType type) {
 		addToken(type, null);
+	}
+
+	// add a token to the tokens list 
+	private void addToken(TokenType type, Object literal) {
+		String text = source.substring(start, current);
+		tokens.add(new Token(type, text, literal, line));
+	}
+
+	// checks if the the end of source reached
+	private boolean isAtEnd() {
+		return (current >= source.length());
 	}
 }
