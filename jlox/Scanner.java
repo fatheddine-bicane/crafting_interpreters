@@ -68,6 +68,10 @@ class Scanner {
 			case '\t':
 			case '\r':
 				break;
+			// if encountring newLine skip and increment line
+			case '\n':
+				line++;
+				break;
 	}
 
 	// check if the charcter at the current position matches the expected
