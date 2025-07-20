@@ -55,7 +55,7 @@ public class Lox {
 	}
 
 	static void error(int line, String message) {
-		report(ine, "", message);
+		report(line, "", message);
 	}
 
 	private static void report(int line, String where, String message) {
