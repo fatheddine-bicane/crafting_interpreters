@@ -32,4 +32,30 @@ class Scanner {
 		tokens.add(new Token(EOF, "", null, line));
 		return (tokens);
 	}
+
+	private void scanToken() {
+		char c = advance();
+
+		switch (c) {
+			// single characters tokenizing
+			case '(': addToken(LEFT_PAREN); break;
+			case ')': addToken(RIGHT_PAREN); break;
+			case '{': addToken(LEFT_BRACE); break;
+			case '}': addToken(RIGHT_BRACE); break;
+			case ',': addToken(COMMA); break;
+			case '.': addToken(DOT); break;
+			case '-': addToken(MINUS); break;
+			case '+': addToken(PLUS); break;
+			case ';': addToken(SEMICOLON); break;
+			case '*': addToken(STAR); break;
+	}
+	// consume the current character
+	private char advance() {
+		return (source.charAt(current++));
+	}
+
+	// adds a token to the list tokens using the the method below
+	private void addToken(TokenType type) {
+		addToken(type, null);
+	}
 }
