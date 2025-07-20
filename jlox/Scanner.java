@@ -63,6 +63,11 @@ class Scanner {
 				} else {
 					addToken(SLASH);
 				}
+			// skip meaningless characters (spaces tabse...)
+			case ' ':
+			case '\t':
+			case '\r':
+				break;
 	}
 
 	// check if the charcter at the current position matches the expected
