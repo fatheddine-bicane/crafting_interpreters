@@ -31,7 +31,7 @@ public class GenerateAst {
 		writer.println();
 		writer.println("import java.util.List;");
 		writer.println();
-		writer.println("abstract class" + baseName + " {");
+		writer.println("abstract class " + baseName + " {");
 
 		defineVisitor(writer, baseName, types);
 
@@ -81,14 +81,6 @@ public class GenerateAst {
 		}
 		writer.println("    }");
 
-		// Fields.
-		writer.println();
-		for (String field : fields) {
-			writer.println("    final " + field + ";");
-		}
-
-		writer.println("  }");
-
 		// Visitor pattern.
 		writer.println();
 		writer.println("    @Override");
@@ -97,5 +89,12 @@ public class GenerateAst {
 				className + baseName + "(this);");
 		writer.println("    }");
 
+		// Fields.
+		writer.println();
+		for (String field : fields) {
+			writer.println("    final " + field + ";");
+		}
+
+		writer.println("  }");
 	}
 }
