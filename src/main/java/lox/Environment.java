@@ -1,4 +1,4 @@
-package jlox.lox;
+package lox;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,16 +44,16 @@ class Environment {
 	Environment ancestor(int distance) {
 		Environment environment = this;
 		for (int i = 0; i < distance; i++) {
-			environment = environment.enclosing; 
+			environment = environment.ENCLOSING;
 		}
 		return environment;
 	}
 
 	Object getAt(int distance, String name) {
-		return ancestor(distance).values.get(name);
+		return ancestor(distance).VALUES.get(name);
 	}
 
 	void assignAt(int distance, Token name, Object value) {
-		ancestor(distance).values.put(name.lexeme, value);
+		ancestor(distance).VALUES.put(name.lexeme, value);
 	}
 }

@@ -1,9 +1,9 @@
-package jlox.lox;
+package lox;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import static jlox.lox.TokenType.*;
+import static lox.TokenType.*;
 
 // NOTE: these down are rules that define how an expression in Lox is defined
 // expression     → assignment ;

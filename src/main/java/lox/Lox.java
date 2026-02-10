@@ -1,4 +1,4 @@
-package jlox.lox;
+package lox;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -57,7 +57,7 @@ public class Lox {
 		if (hadError) return;
 
 		// resovlve the AST befor interpreting
-		Resolver resolver = new Resolver(interpreter);
+		Resolver resolver = new Resolver(INTERPRETER);
 		resolver.resolve(statements);
 
 		// Stop if there was a resolution error.
