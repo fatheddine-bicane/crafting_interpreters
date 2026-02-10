@@ -1,0 +1,110 @@
+// ============================================
+// CONTROL FLOW IN LOX
+// ============================================
+// This example demonstrates if-else statements,
+// while loops, and for loops.
+
+// --------------------------------------------
+// IF-ELSE STATEMENTS
+// --------------------------------------------
+
+var age = 18;
+
+// Simple if statement
+if (age >= 18) {
+    print "You are an adult";
+}
+
+// If-else statement
+var temperature = 25;
+
+if (temperature > 30) {
+    print "It's hot!";
+} else {
+    print "It's comfortable";
+}
+
+// Nested if-else (else-if pattern)
+var score = 85;
+
+if (score >= 90) {
+    print "Grade: A";
+} else {
+    if (score >= 80) {
+        print "Grade: B";
+    } else {
+        if (score >= 70) {
+            print "Grade: C";
+        } else {
+            print "Grade: F";
+        }
+    }
+}
+
+// --------------------------------------------
+// WHILE LOOPS
+// --------------------------------------------
+
+print "Counting with while loop:";
+var i = 1;
+while (i <= 5) {
+    print i;
+    i = i + 1;
+}
+
+// While loop with condition
+print "Countdown:";
+var countdown = 5;
+while (countdown > 0) {
+    print countdown;
+    countdown = countdown - 1;
+}
+print "Liftoff!";
+
+// --------------------------------------------
+// FOR LOOPS
+// --------------------------------------------
+
+print "Counting with for loop:";
+for (var j = 1; j <= 5; j = j + 1) {
+    print j;
+}
+
+// For loop to calculate sum of 1 to 10
+var sum = 0;
+for (var n = 1; n <= 10; n = n + 1) {
+    sum = sum + n;
+}
+print "Sum of 1 to 10:";
+print sum;  // 55
+
+// For loop with existing variable
+var x = 0;
+for (; x < 3; x = x + 1) {
+    print x;
+}
+
+// Nested loops - multiplication table (3x3)
+print "Multiplication table:";
+for (var row = 1; row <= 3; row = row + 1) {
+    for (var col = 1; col <= 3; col = col + 1) {
+        print row * col;
+    }
+}
+
+// --------------------------------------------
+// COMBINING CONTROL FLOW
+// --------------------------------------------
+
+// Find even numbers from 1 to 10
+print "Even numbers from 1 to 10:";
+for (var num = 1; num <= 10; num = num + 1) {
+    // Check if number is even (divisible by 2)
+    // We use integer division trick: num/2*2 == num means even
+    var half = num / 2;
+    var doubled = half * 2;
+    // Since Lox uses floats, we compare with small epsilon
+    if (doubled == num) {
+        print num;
+    }
+}

@@ -1,0 +1,205 @@
+// ============================================
+// CLOSURES IN LOX
+// ============================================
+// Closures are functions that capture and remember
+// variables from their enclosing scope.
+
+// --------------------------------------------
+// BASIC CLOSURE
+// --------------------------------------------
+
+fun outer() {
+    var x = "captured";
+    
+    fun inner() {
+        // 'inner' captures 'x' from 'outer'
+        print x;
+    }
+    
+    return inner;
+}
+
+var closure = outer();
+closure();  // Prints: "captured"
+
+// --------------------------------------------
+// COUNTER FACTORY
+// --------------------------------------------
+
+// Each call to makeCounter creates a new independent counter
+fun makeCounter() {
+    var count = 0;
+    
+    fun increment() {
+        count = count + 1;
+        return count;
+    }
+    
+    return increment;
+}
+
+var counter1 = makeCounter();
+var counter2 = makeCounter();
+
+print "Counter 1:";
+print counter1();  // 1
+print counter1();  // 2
+print counter1();  // 3
+
+print "Counter 2 (independent):";
+print counter2();  // 1
+print counter2();  // 2
+
+print "Counter 1 continues:";
+print counter1();  // 4
+
+// --------------------------------------------
+// MULTIPLIER FACTORY
+// --------------------------------------------
+
+// Creates a function that multiplies by a specific factor
+fun createMultiplier(factor) {
+    fun multiply(x) {
+        return x * factor;
+    }
+    return multiply;
+}
+
+var double = createMultiplier(2);
+var triple = createMultiplier(3);
+var quadruple = createMultiplier(4);
+
+print "Using multipliers:";
+print double(5);     // 10
+print triple(5);     // 15
+print quadruple(5);  // 20
+
+// --------------------------------------------
+// ADDER FACTORY
+// --------------------------------------------
+
+fun makeAdder(addend) {
+    fun add(x) {
+        return x + addend;
+    }
+    return add;
+}
+
+var add5 = makeAdder(5);
+var add10 = makeAdder(10);
+
+print "Using adders:";
+print add5(3);   // 8
+print add10(3);  // 13
+print add5(add10(1));  // 16 (1 + 10 + 5)
+
+// --------------------------------------------
+// PRIVATE STATE PATTERN
+// --------------------------------------------
+
+// Simulating private state with closures
+fun createBankAccount(initialBalance) {
+    var balance = initialBalance;
+    
+    fun getBalance() {
+        return balance;
+    }
+    
+    fun deposit(amount) {
+        if (amount > 0) {
+            balance = balance + amount;
+            print "Deposited: " + amount;
+        }
+        return balance;
+    }
+    
+    fun withdraw(amount) {
+        if (amount > 0 and amount <= balance) {
+            balance = balance - amount;
+            print "Withdrew: " + amount;
+        } else {
+            print "Insufficient funds!";
+        }
+        return balance;
+    }
+    
+    // Return the deposit function as the "public interface"
+    // In a full implementation, you'd return multiple functions
+    return deposit;
+}
+
+var account = createBankAccount(100);
+print "After deposit:";
+print account(50);  // Balance: 150
+
+// --------------------------------------------
+// ACCUMULATOR
+// --------------------------------------------
+
+fun makeAccumulator() {
+    var total = 0;
+    
+    fun accumulate(value) {
+        total = total + value;
+        return total;
+    }
+    
+    return accumulate;
+}
+
+var acc = makeAccumulator();
+print "Accumulating values:";
+print acc(10);  // 10
+print acc(5);   // 15
+print acc(20);  // 35
+print acc(5);   // 40
+
+// --------------------------------------------
+// CLOSURE OVER LOOP VARIABLE
+// --------------------------------------------
+
+// Demonstrating closure capturing behavior
+fun createFunctions() {
+    var i = 0;
+    
+    fun printI() {
+        print i;
+    }
+    
+    // Modify i
+    i = 42;
+    
+    // The closure sees the current value of i
+    return printI;
+}
+
+var fn = createFunctions();
+fn();  // Prints: 42 (not 0!)
+
+// --------------------------------------------
+// COMPOSE FUNCTIONS
+// --------------------------------------------
+
+// Higher-order function that composes two functions
+fun compose(f, g) {
+    fun composed(x) {
+        return f(g(x));
+    }
+    return composed;
+}
+
+fun addOne(x) {
+    return x + 1;
+}
+
+fun square(x) {
+    return x * x;
+}
+
+// compose(addOne, square) means addOne(square(x))
+var addOneThenSquare = compose(square, addOne);
+var squareThenAddOne = compose(addOne, square);
+
+print "Composed functions:";
+print addOneThenSquare(4);  // (4+1)^2 = 25
+print squareThenAddOne(4);  // 4^2 + 1 = 17

@@ -1,0 +1,154 @@
+// ============================================
+// FUNCTIONS IN LOX
+// ============================================
+// This example covers function declaration,
+// parameters, return values, and recursion.
+
+// --------------------------------------------
+// BASIC FUNCTION DECLARATION
+// --------------------------------------------
+
+// Simple function with no parameters
+fun sayHello() {
+    print "Hello!";
+}
+
+// Call the function
+sayHello();  // Hello!
+
+// Function with parameters
+fun greet(name) {
+    print "Hello, " + name + "!";
+}
+
+greet("Alice");  // Hello, Alice!
+greet("Bob");    // Hello, Bob!
+
+// Function with multiple parameters
+fun introduce(name, age) {
+    print name + " is " + age + " years old";
+}
+
+introduce("Charlie", 25);
+
+// --------------------------------------------
+// RETURN VALUES
+// --------------------------------------------
+
+// Function that returns a value
+fun add(a, b) {
+    return a + b;
+}
+
+var sum = add(3, 4);
+print sum;  // 7
+
+// Function with early return
+fun absoluteValue(n) {
+    if (n < 0) {
+        return -n;
+    }
+    return n;
+}
+
+print absoluteValue(-5);   // 5
+print absoluteValue(10);   // 10
+
+// Function returning a string
+fun formatGreeting(name) {
+    return "Welcome, " + name + "!";
+}
+
+var message = formatGreeting("David");
+print message;  // Welcome, David!
+
+// --------------------------------------------
+// RECURSION
+// --------------------------------------------
+
+// Factorial using recursion
+fun factorial(n) {
+    if (n <= 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+print "Factorials:";
+print factorial(1);   // 1
+print factorial(5);   // 120
+print factorial(7);   // 5040
+
+// Fibonacci using recursion
+fun fibonacci(n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+print "Fibonacci numbers:";
+for (var i = 0; i <= 10; i = i + 1) {
+    print fibonacci(i);
+}
+
+// Power function using recursion
+fun power(base, exponent) {
+    if (exponent == 0) {
+        return 1;
+    }
+    return base * power(base, exponent - 1);
+}
+
+print "Powers of 2:";
+print power(2, 0);   // 1
+print power(2, 1);   // 2
+print power(2, 8);   // 256
+print power(2, 10);  // 1024
+
+// --------------------------------------------
+// FUNCTIONS AS FIRST-CLASS VALUES
+// --------------------------------------------
+
+// Functions can be stored in variables
+fun multiply(a, b) {
+    return a * b;
+}
+
+var operation = multiply;
+print operation(6, 7);  // 42
+
+// Functions can be passed as arguments
+fun applyTwice(fn, value) {
+    return fn(fn(value));
+}
+
+fun double(x) {
+    return x * 2;
+}
+
+print applyTwice(double, 5);  // 20 (5 -> 10 -> 20)
+
+// --------------------------------------------
+// LOCAL FUNCTIONS
+// --------------------------------------------
+
+// Functions can be defined inside other functions
+fun outerFunction() {
+    fun innerFunction() {
+        print "I'm inside!";
+    }
+    
+    print "Calling inner function:";
+    innerFunction();
+}
+
+outerFunction();
+
+// --------------------------------------------
+// BUILT-IN FUNCTION: clock()
+// --------------------------------------------
+
+// clock() returns the current time in seconds
+print "Current time (seconds since epoch):";
+print clock();

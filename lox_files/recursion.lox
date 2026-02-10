@@ -1,0 +1,172 @@
+// ============================================
+// RECURSION EXAMPLES IN LOX
+// ============================================
+// This example demonstrates various recursive
+// algorithms implemented in Lox.
+
+// --------------------------------------------
+// COUNTDOWN (Tail Recursion Pattern)
+// --------------------------------------------
+
+fun countdown(n) {
+    if (n <= 0) {
+        print "Blast off!";
+        return nil;
+    }
+    print n;
+    return countdown(n - 1);
+}
+
+print "Countdown from 5:";
+countdown(5);
+
+// --------------------------------------------
+// SUM OF NUMBERS FROM 1 TO N
+// --------------------------------------------
+
+fun sumTo(n) {
+    if (n <= 0) {
+        return 0;
+    }
+    return n + sumTo(n - 1);
+}
+
+print "Sum of 1 to 10:";
+print sumTo(10);  // 55
+
+print "Sum of 1 to 100:";
+print sumTo(100);  // 5050
+
+// --------------------------------------------
+// GREATEST COMMON DIVISOR (GCD)
+// --------------------------------------------
+
+// Euclidean algorithm using recursion
+fun gcd(a, b) {
+    if (b == 0) {
+        return a;
+    }
+    // Compute a mod b manually (a - (a/b)*b for integers)
+    // Since Lox has floats, we need a workaround
+    var quotient = a / b;
+    // Truncate to integer by subtracting fractional part
+    var intQuotient = quotient - (quotient - 1) + 1;
+    if (intQuotient > quotient) {
+        intQuotient = intQuotient - 1;
+    }
+    var remainder = a - intQuotient * b;
+    return gcd(b, remainder);
+}
+
+// Note: GCD works best with integer-like values
+print "GCD of 48 and 18:";
+print gcd(48, 18);  // Should be 6
+
+// --------------------------------------------
+// BINARY REPRESENTATION (Print digits)
+// --------------------------------------------
+
+// Prints binary representation of a positive integer
+fun printBinary(n) {
+    if (n < 2) {
+        print n;
+        return nil;
+    }
+    
+    // Integer division by 2
+    var half = n / 2;
+    var intHalf = half;
+    if (half > 0) {
+        // Truncate decimal part
+        var temp = half;
+        while (temp >= 1) {
+            temp = temp - 1;
+        }
+        intHalf = half - temp;
+    }
+    
+    printBinary(intHalf);
+    
+    // Print remainder (0 or 1)
+    var remainder = n - intHalf * 2;
+    print remainder;
+}
+
+print "Binary of 13 (digits):";
+printBinary(13);  // 1, 1, 0, 1
+
+// --------------------------------------------
+// MUTUAL RECURSION
+// --------------------------------------------
+
+// Two functions that call each other
+fun isEven(n) {
+    if (n == 0) {
+        return true;
+    }
+    return isOdd(n - 1);
+}
+
+fun isOdd(n) {
+    if (n == 0) {
+        return false;
+    }
+    return isEven(n - 1);
+}
+
+print "Is 4 even?";
+print isEven(4);  // true
+
+print "Is 7 even?";
+print isEven(7);  // false
+
+print "Is 5 odd?";
+print isOdd(5);   // true
+
+// --------------------------------------------
+// TOWER OF HANOI
+// --------------------------------------------
+
+// Classic Tower of Hanoi puzzle
+// Prints the moves to solve it
+var moveCount = 0;
+
+fun hanoi(n, from, to, aux) {
+    if (n == 1) {
+        moveCount = moveCount + 1;
+        print "Move disk from " + from + " to " + to;
+        return nil;
+    }
+    
+    hanoi(n - 1, from, aux, to);
+    moveCount = moveCount + 1;
+    print "Move disk from " + from + " to " + to;
+    hanoi(n - 1, aux, to, from);
+}
+
+print "Tower of Hanoi with 3 disks:";
+hanoi(3, "A", "C", "B");
+print "Total moves:";
+print moveCount;  // 7
+
+// --------------------------------------------
+// ACKERMANN FUNCTION
+// --------------------------------------------
+
+// A famous recursive function that grows very fast
+// Warning: Don't use large values!
+fun ackermann(m, n) {
+    if (m == 0) {
+        return n + 1;
+    }
+    if (n == 0) {
+        return ackermann(m - 1, 1);
+    }
+    return ackermann(m - 1, ackermann(m, n - 1));
+}
+
+print "Ackermann(2, 3):";
+print ackermann(2, 3);  // 9
+
+print "Ackermann(3, 2):";
+print ackermann(3, 2);  // 29

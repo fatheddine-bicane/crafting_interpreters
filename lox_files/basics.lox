@@ -1,0 +1,114 @@
+// ============================================
+// LOX BASICS - DATA TYPES AND VARIABLES
+// ============================================
+// This example covers the fundamental data types
+// and variable operations in Lox.
+
+// --------------------------------------------
+// DATA TYPES
+// --------------------------------------------
+
+// Numbers (double-precision floating point)
+var integer = 42;
+var decimal = 3.14159;
+var negative = -7.5;
+
+print integer;   // 42
+print decimal;   // 3.14159
+print negative;  // -7.5
+
+// Strings (enclosed in double quotes)
+var greeting = "Hello, World!";
+var name = "Lox";
+
+print greeting;  // Hello, World!
+print name;      // Lox
+
+// Booleans
+var isTrue = true;
+var isFalse = false;
+
+print isTrue;    // true
+print isFalse;   // false
+
+// Nil (represents absence of value)
+var nothing = nil;
+print nothing;   // nil
+
+// --------------------------------------------
+// VARIABLE DECLARATION AND ASSIGNMENT
+// --------------------------------------------
+
+// Declaration without initialization (defaults to nil)
+var uninitialized;
+print uninitialized;  // nil
+
+// Declaration with initialization
+var age = 25;
+print age;  // 25
+
+// Reassignment
+age = 26;
+print age;  // 26
+
+// --------------------------------------------
+// ARITHMETIC OPERATORS
+// --------------------------------------------
+
+var a = 10;
+var b = 3;
+
+print a + b;   // Addition: 13
+print a - b;   // Subtraction: 7
+print a * b;   // Multiplication: 30
+print a / b;   // Division: 3.333...
+print -a;      // Negation: -10
+
+// --------------------------------------------
+// STRING CONCATENATION
+// --------------------------------------------
+
+var first = "Hello";
+var second = "World";
+var space = " ";
+
+// Strings can be concatenated with +
+print first + space + second;  // Hello World
+
+// --------------------------------------------
+// COMPARISON OPERATORS
+// --------------------------------------------
+
+print 5 > 3;    // true
+print 5 >= 5;   // true
+print 3 < 5;    // true
+print 3 <= 3;   // true
+print 5 == 5;   // true
+print 5 != 3;   // true
+
+// Equality works across types
+print 5 == "5";     // false (different types)
+print nil == nil;   // true
+
+// --------------------------------------------
+// LOGICAL OPERATORS
+// --------------------------------------------
+
+print !true;           // false (NOT)
+print !false;          // true
+
+print true and true;   // true (AND)
+print true and false;  // false
+print false and true;  // false
+
+print true or false;   // true (OR)
+print false or true;   // true
+print false or false;  // false
+
+// Logical operators use short-circuit evaluation
+// and return the value that determined the result
+var result = nil or "default";
+print result;  // "default"
+
+var value = "exists" and "used";
+print value;   // "used"
