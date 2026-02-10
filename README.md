@@ -63,19 +63,16 @@ If you prefer to compile the interpreter on your machine:
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:fatheddine-bicane/crafting_interpreters.git
    cd crafting_interpreters
    ```
 
 2. Build the project using Maven:
    ```bash
-   mvn clean compile
+   mvn clean package
    ```
 
-3. (Optional) Package as a JAR:
-   ```bash
-   mvn package
-   ```
+   This will compile the code and create the JAR file at `target/jlox-1.0.jar`.
 
 ---
 
@@ -88,7 +85,7 @@ If you prefer to compile the interpreter on your machine:
 Run the interpreter without any arguments to start the interactive prompt:
 
 ```bash
-java -cp target/classes lox.Lox
+java -jar target/jlox-1.0.jar
 ```
 
 You'll see a `>` prompt where you can type Lox code line by line:
@@ -104,12 +101,6 @@ Hello, World!
 ### Running a Script File
 
 Pass a `.lox` file as an argument to execute a script:
-
-```bash
-java -cp target/classes lox.Lox path/to/script.lox
-```
-
-Or if you built the JAR:
 
 ```bash
 java -jar target/jlox-1.0.jar path/to/script.lox
@@ -137,7 +128,7 @@ Run any example with:
 docker run -v $(pwd):/scripts fatheddinebicane/jlox:v1 /scripts/lox_scripts/basics.lox
 
 # Or locally
-java -cp target/classes lox.Lox lox_scripts/basics.lox
+java -jar target/jlox-1.0.jar lox_scripts/basics.lox
 ```
 
 ---
